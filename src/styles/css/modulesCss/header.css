@@ -1,0 +1,152 @@
+/* src/styles/css/modulesCss/header.css */
+
+#Header {
+    background-color: var(--dark-slate);
+    border-bottom: 1px solid var(--rich-blue);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    opacity: 1;
+    transform: translateY(-100%);
+    animation: fadeIn 0.6s ease forwards;
+}
+
+.header-container {
+    max-width: 75%;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Логотип */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.logo-icon {
+    font-size: 2rem;
+    color: var(--accent-gold);
+}
+
+/* Навигация */
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-list {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    color: var(--text-secondary);
+}
+
+/* Ссылки */
+.link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.link:hover {
+    color: var(--accent-gold);
+}
+
+/* Простая анимация подчеркивания */
+.link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent-gold);
+    transition: width 0.3s ease;
+}
+
+.link:hover::after {
+    width: 100%;
+}
+
+/* Кнопка авторизации */
+.authorization-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.authorization-nav .link {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--accent-gold);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.authorization-nav .link:hover {
+    background-color: var(--accent-gold);
+    color: var(--deep-navy);
+}
+
+.authorization-nav .link:hover::after {
+    width: 0;
+}
+
+
+
+.nav-list .link.active::after{
+    width: 100%;
+}
+.nav-list .link.active{
+color: var(--accent-gold);
+}
+.authorization-nav .link.active{
+    background-color: var(--accent-gold);
+    color: var(--deep-navy);
+}
+
+
+
+@media (max-width: 1366px) {
+    .link {
+        font-size: 0.8rem;
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 856px) {
+    .header-container {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .header-nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-list {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,242 @@
+.brief-book-card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--dark-slate);
+    border-radius: 4px;
+    gap: 1rem;
+    height: 100%;
+    max-width: 300px;
+}
+
+/* Контейнер картинки */
+.brief-book-card .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--rich-blue);
+    padding: 1rem 0;
+    height: 15rem;
+    border-radius: 4px;
+    flex-shrink: 0; /* Предотвращает сжатие */
+}
+
+/* Главный контент */
+.brief-book-card .main-offer-card-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem 1rem;
+    flex-grow: 1; /* Занимает доступное пространство */
+    justify-content: space-between; /* Равномерное распределение */
+}
+
+/* Хедер карточки */
+.brief-book-card .header-offer-card-content h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    color: var(--text-primary);
+}
+
+/* Тело карточки */
+.brief-book-card .body-offer-card-content p {
+    font-size: 0.9rem;
+    color: var(--accent-gold);
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+/* Подвал карточки */
+.brief-book-card .footer-offer-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.brief-book-card .meta-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.brief-book-card .rating-book {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    
+    align-self: flex-end;
+}
+
+
+/* =========== */
+.genres-container {
+    position: relative;
+    display: inline-block;
+}
+
+.genres-trigger {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.genres-trigger:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.genre-icon {
+    font-size: 12px;
+    color: var(--accent-gold);
+}
+
+.genre-count {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.genres-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    margin-bottom: 8px;
+    background: var(--deep-navy);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    min-width: 150px;
+    animation: fadeInUp 0.2s ease;
+}
+
+.genres-tooltip::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 12px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--deep-navy);
+}
+
+.tooltip-content {
+    padding: 8px;
+}
+
+.genres-list-tooltip {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.genre-tag {
+    background: var(--accent-gold);
+    color: var(--white);
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem !important;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Остальные ваши стили */
+.genres-list{
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.genres-list .genre {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.meta-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rating-book {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+.rating-book .rating-value{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    gap: 3px;
+    color: var(--accent-gold);
+}
+.rating-book span{
+    color: var(--text-tertiary);
+}
+
+
+/* =========== */
+
+.brief-book-card .reed-book-button {
+    border: none;
+    background-color: var(--accent-gold);
+    color: var(--deep-navy);
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.brief-book-card .reed-book-button:hover {
+    background-color: #a89660;
+}
+
+.brief-book-card .reed-book-button:active {
+    transform: translateY(0);
+}
+
+/* Анимация */
+.brief-book-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

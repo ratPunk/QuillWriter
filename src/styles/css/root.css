@@ -1,0 +1,68 @@
+@font-face {
+    font-family: 'Roboto Mono';
+    src: url('../fonts/RobotoMono-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --deep-navy: #0a1929;
+    --dark-slate: #1a2937;
+    --rich-blue: #203a43;
+    --button-hover: #9f8d5a;
+    --accent-gold: #c8b273;
+    --light-gray: #e9ecef;
+    --white: #ffffff;
+    --text-primary: #f8f9fa;
+    --text-secondary: #dee2e6;
+    --text-tertiary: #c3c6c9;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto Mono', monospace;
+    letter-spacing: 2px;
+    }   
+body{
+    background-color: var(--deep-navy);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+#root{
+    background-color: var(--deep-navy);
+}
+
+
+/* styles/global.css или в ваш основной CSS файл */
+
+/* Для Webkit браузеров (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--deep-navy);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-gold);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #d4af37; /* Более светлый оттенок gold */
+}
+
+/* Для Firefox */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-gold) var(--deep-navy);
+}
+
+/* Для всего приложения */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-gold) var(--deep-navy);
+}

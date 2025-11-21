@@ -1,0 +1,168 @@
+#BookCard {
+    padding: 2rem 0;
+    height: 100%;
+    background-color: var(--deep-navy);
+    color: var(--text-primary);
+
+    max-width: 1400px;
+
+    margin: 0 auto;
+}
+
+/* Основной контейнер */
+.main-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 86vh;
+    gap: 2rem 2rem;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+/* Левая часть — иконка */
+.main-card .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: var(--rich-blue);
+    border-radius: 4px;
+}
+
+/* Правая часть — данные */
+.main-book-data {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    gap: 1.5rem;
+    /*padding: 1rem 0;*/
+}
+
+.back-button{
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+    display: flex;
+    justify-content: start;
+}
+
+/* Заголовок и автор */
+.book-header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: var(--accent-gold);
+    font-weight: 700;
+}
+
+.author {
+    font-size: 1.4rem;
+    margin: 0.5rem 0 0;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Мета-информация: жанр и рейтинг */
+.book-meta {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.genre-tag {
+    padding: 0.4rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    font-size: 1rem;
+
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--accent-gold);
+    font-weight: 600;
+}
+
+.star-icon {
+    fill: var(--accent-gold);
+}
+
+/* Описание */
+.book-description p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    max-width: 90%;
+}
+
+/* Кнопки действий */
+.book-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.btn-primary,
+.btn-outline {
+    padding: 0.8rem 1.8rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--accent-gold);
+    color: var(--deep-navy);
+}
+
+
+
+.btn-outline {
+    background: transparent !important;
+    border: 1px solid var(--accent-gold) !important;
+    color: var(--accent-gold) !important;
+}
+
+.btn-outline:hover {
+    background-color: var(--rich-blue) !important;
+}
+
+/* Сообщение об ошибке */
+.book-not-found {
+    position: absolute;
+
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 100px;
+}
+
+.main-card .image-container {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: fadeInLeft 0.6s ease forwards;
+}
+.main-book-data {
+    opacity: 0;
+    transform: translateX(20px);
+    animation: fadeInRight 0.6s ease forwards;
+}
+@keyframes fadeInLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes fadeInRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
