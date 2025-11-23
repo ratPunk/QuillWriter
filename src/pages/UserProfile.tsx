@@ -1,55 +1,51 @@
 import { useEffect, useState } from "react";
-import Header from "../modules/Header";
-import { getUserFromCookies, saveUserToCookies } from "../utils/cookies";
-import type { User } from "../typescript/user";
-import "../styles/css/pagesCss/userprofile.css";
+import { useNavigate } from "react-router-dom";
 import { FaUser, FaEnvelope, FaCalendarAlt, FaEdit } from "react-icons/fa";
 import { LuLogOut, LuSettings } from "react-icons/lu";
-import { removeUserFromCookies } from '../utils/cookies';
-import { useNavigate } from "react-router-dom";
 import { FaCopy } from "react-icons/fa6";
 import toast, { Toaster } from 'react-hot-toast';
+
+import Header from "../modules/Header";
 import Modal from "../modules/Modal";
+import { getUserFromCookies, saveUserToCookies, removeUserFromCookies } from "../utils/cookies";
 import { updateUserProfile } from "../api/UpdateUser";
+import type { User } from "../typescript/user";
+import "../styles/css/pagesCss/userprofile.css";
 
 function UserProfile() {
-    const navigate = useNavigate();
+    // State
     const [user, setUser] = useState<User | null>(null);
     const [isCopied, setIsCopied] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+    // Hooks
+    const navigate = useNavigate();
 
+    // Effects
     useEffect(() => {
         setUser(getUserFromCookies());
     }, []);
 
+    // Modal handlers
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+    // Event handlers
     const handleLogout = () => {
         removeUserFromCookies();
-        console.log("Logout clicked");
         navigate('/');
     };
 
     const handleEditProfile = () => {
-        // Добавьте логику редактирования профиля
         openModal();
-        console.log("Edit profile clicked");
     };
 
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString('ru-RU', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    };
-
-    const handleCopy = async (value: string) => {
+    const handleCopy = async (value: string | undefined) => {
         try {
-            if (!isCopied) {
+            if(value === undefined){
+
+            }else if (!isCopied) {
                 setIsCopied(true);
-                console.log('text copyed');
                 await navigator.clipboard.writeText(value);
                 toast('Ваш user id скопирован!');
                 setTimeout(() => setIsCopied(false), 2000);
@@ -60,16 +56,13 @@ function UserProfile() {
         }
     };
 
-    // В UserProfile компоненте
     const handleSaveProfile = async (updatedData: Partial<User>) => {
         try {
             if (!user) return;
 
             const result = await updateUserProfile(user.id, updatedData);
-
-            // Обновляем локальное состояние
             saveUserToCookies(result.data);
-
+            
             if (updatedData.username || updatedData.email || updatedData.user_id) {
                 setUser(prev => prev ? { ...prev, ...updatedData } : null);
             }
@@ -78,7 +71,6 @@ function UserProfile() {
         } catch (error: any) {
             console.error('Error updating profile:', error);
 
-            // Показываем конкретную ошибку от сервера
             if (error.message.includes('already taken')) {
                 toast.error('Этот username/email/user_id уже занят');
             } else {
@@ -87,6 +79,16 @@ function UserProfile() {
         }
     };
 
+    // Helper functions
+    const formatDate = (dateString: string) => {
+        return new Date(dateString).toLocaleDateString('ru-RU', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
+
+    // Render conditions
     if (!user) {
         return (
             <div id="UserProfile">
@@ -103,26 +105,28 @@ function UserProfile() {
     }
 
     return (
-
         <div id="UserProfile">
             <Header />
+            
             <div className="user-profile-container">
-                {/* <div className="profile-header">
-                    <h1>Профиль пользователя</h1>
-                    <p>Управление вашей учетной записью</p>
-                </div> */}
-
+                {/* User Card */}
                 <div className="user-card">
                     <div className="card-header">
                         <div className="user-avatar">
                             <div className="avatar-icon">
                                 <FaUser />
                             </div>
-                            {/* <div className="avatar-status"></div> */}
                         </div>
                         <div className="user-basic-info">
                             <h2>{user.username}</h2>
-                            <p className="user-id">{user.user_id} <FaCopy size={20} className="user-id-copy" onClick={() => handleCopy(`${user.user_id}`)} /></p>
+                            <p className="user-id">
+                                {user.user_id} 
+                                <FaCopy 
+                                    size={20} 
+                                    className="user-id-copy" 
+                                    onClick={() => handleCopy(user.user_id)} 
+                                />
+                            </p>
                         </div>
                         <div className="header-actions">
                             <button
@@ -132,7 +136,6 @@ function UserProfile() {
                             >
                                 <FaEdit />
                             </button>
-
                             <button
                                 className="icon-btn settings-btn"
                                 title="Настройки"
@@ -144,99 +147,60 @@ function UserProfile() {
 
                     <div className="card-body">
                         <div className="user-info-grid">
-                            <div className="info-item">
-                                <div className="info-icon">
-                                    <FaUser />
-                                </div>
-                                <div className="info-content">
-                                    <label>Имя пользователя</label>
-                                    <span>{user.username}</span>
-                                </div>
-                            </div>
-
-                            <div className="info-item">
-                                <div className="info-icon">
-                                    <FaEnvelope />
-                                </div>
-                                <div className="info-content">
-                                    <label>Email</label>
-                                    <span>{user.email}</span>
-                                </div>
-                            </div>
-
-                            <div className="info-item">
-                                <div className="info-icon">
-                                    <FaCalendarAlt />
-                                </div>
-                                <div className="info-content">
-                                    <label>Дата регистрации</label>
-                                    <span>{formatDate(user.createdAt)}</span>
-                                </div>
-                            </div>
-
-                            {/* <div className="info-item">
-                                <div className="info-icon">
-                                    <FaUser />
-                                </div>
-                                <div className="info-content">
-                                    <label>ID пользователя</label>
-                                    <span className="user-id">{user.id}</span>
-                                </div>
-                            </div> */}
+                            <InfoItem 
+                                icon={<FaUser />}
+                                label="Имя пользователя"
+                                value={user.username}
+                            />
+                            <InfoItem 
+                                icon={<FaEnvelope />}
+                                label="Email"
+                                value={user.email}
+                            />
+                            <InfoItem 
+                                icon={<FaCalendarAlt />}
+                                label="Дата регистрации"
+                                value={formatDate(user.createdAt)}
+                            />
                         </div>
                     </div>
 
                     <div className="card-footer">
                         <div className="user-stats">
-                            <div className="stat-item">
-                                <span className="stat-number">0</span>
-                                <span className="stat-label">Подписчиков</span>
-                            </div>
-                            <div className="stat-item">
-                                <span className="stat-number">0</span>
-                                <span className="stat-label">Подписок</span>
-                            </div>
-                            <div className="stat-item">
-                                <span className="stat-number">0</span>
-                                <span className="stat-label">Статей</span>
-                            </div>
-                            <div className="stat-item">
-                                <span className="stat-number">0</span>
-                                <span className="stat-label">Закладки</span>
-                            </div>
+                            <StatItem number={0} label="Подписчиков" />
+                            <StatItem number={0} label="Подписок" />
+                            <StatItem number={0} label="Статей" />
+                            <StatItem number={0} label="Закладки" />
                         </div>
 
-                        <button
-                            className="logout-btn"
-                            onClick={handleLogout}
-                        >
+                        <button className="logout-btn" onClick={handleLogout}>
                             <LuLogOut />
                             <span>Выйти</span>
                         </button>
                     </div>
                 </div>
 
+                {/* Profile Sections */}
                 <div className="profile-sections">
-                    <div className="section-card">
-                        <h3>Настройки аккаунта</h3>
-                        <p>Управление настройками вашего профиля и предпочтениями</p>
-                        <button className="section-btn">Управление</button>
-                    </div>
-
-                    <div className="section-card">
-                        <h3>Безопасность</h3>
-                        <p>Измените пароль и настройки безопасности</p>
-                        <button className="section-btn">Настройки</button>
-                    </div>
-
-                    <div className="section-card">
-                        <h3>Активность</h3>
-                        <p>Просмотр истории действий и активности</p>
-                        <button className="section-btn">Просмотр</button>
-                    </div>
+                    <SectionCard 
+                        title="Настройки аккаунта"
+                        description="Управление настройками вашего профиля и предпочтениями"
+                        buttonText="Управление"
+                    />
+                    <SectionCard 
+                        title="Безопасность"
+                        description="Измените пароль и настройки безопасности"
+                        buttonText="Настройки"
+                    />
+                    <SectionCard 
+                        title="Активность"
+                        description="Просмотр истории действий и активности"
+                        buttonText="Просмотр"
+                    />
                 </div>
             </div>
 
+            {/* Modals */}
             <Modal
                 isOpen={isModalOpen}
                 onClose={closeModal}
@@ -245,7 +209,7 @@ function UserProfile() {
                 onSave={handleSaveProfile}
             />
 
-
+            {/* Toast */}
             <Toaster
                 position="bottom-right"
                 toastOptions={{
@@ -267,5 +231,48 @@ function UserProfile() {
         </div>
     );
 }
+
+// Sub-components for better organization
+interface InfoItemProps {
+    icon: React.ReactNode;
+    label: string;
+    value: string;
+}
+
+const InfoItem = ({ icon, label, value }: InfoItemProps) => (
+    <div className="info-item">
+        <div className="info-icon">{icon}</div>
+        <div className="info-content">
+            <label>{label}</label>
+            <span>{value}</span>
+        </div>
+    </div>
+);
+
+interface StatItemProps {
+    number: number;
+    label: string;
+}
+
+const StatItem = ({ number, label }: StatItemProps) => (
+    <div className="stat-item">
+        <span className="stat-number">{number}</span>
+        <span className="stat-label">{label}</span>
+    </div>
+);
+
+interface SectionCardProps {
+    title: string;
+    description: string;
+    buttonText: string;
+}
+
+const SectionCard = ({ title, description, buttonText }: SectionCardProps) => (
+    <div className="section-card">
+        <h3>{title}</h3>
+        <p>{description}</p>
+        <button className="section-btn">{buttonText}</button>
+    </div>
+);
 
 export default UserProfile;

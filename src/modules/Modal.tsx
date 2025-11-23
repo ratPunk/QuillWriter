@@ -123,12 +123,7 @@ function Modal({ isOpen, onClose, title = "Редактирование проф
         }
     };
 
-    const handleCancel = () => {
-        // Сбрасываем значения к исходным
-        // if (inputUsernameRef.current) inputUsernameRef.current.value = user.username;
-        // if (inputEmailRef.current) inputEmailRef.current.value = user.email;
-        // if (inputUserIdRef.current) inputUserIdRef.current.value = user.user_id;
-        
+    const handleCancel = () => {    
         setUpdatesData({});
         setHasChanges(false);
         onClose();
