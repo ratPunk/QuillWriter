@@ -3,8 +3,7 @@ import { registerUser } from "../api/RegisterUser";
 import { loginUser } from "../api/LoginUser"; // Импортируй функцию авторизации
 import "@styles/css/pagesCss/authorization.css";
 import { useNavigate } from "react-router-dom";
-import { saveUserToCookies } from "../utils/cookies";
-import { getUserFromCookies } from "../utils/cookies";
+import { getUserFromCookies, saveUserToCookies } from "../utils/cookies";
 import type { User } from "../typescript/user";
 
 
